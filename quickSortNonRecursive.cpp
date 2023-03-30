@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <chrono>
+#include <stack>
 
 using namespace std;
 
@@ -25,15 +26,16 @@ int partition(int array[], int start, int end){
 
 
 void quickSort(int array[], int start, int end){
-    while (start < end) {
+    stack<pair<int, int>> s;
+    s.push(make_pair(start, end));
+    while (!s.empty()) {
+        int start = s.top().first;
+        int end = s.top().second;
+        s.pop();
+        if (end <= start) continue;
         int pivotIndex = partition(array, start, end);
-        if (pivotIndex - start < end - pivotIndex) {
-            quickSort(array, start, pivotIndex - 1);
-            start = pivotIndex + 1;
-        } else {
-            quickSort(array, pivotIndex + 1, end);
-            end = pivotIndex - 1;
-        }
+        s.push(make_pair(start, pivotIndex - 1));
+        s.push(make_pair(pivotIndex + 1, end));
     }
 }
 
