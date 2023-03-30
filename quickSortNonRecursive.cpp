@@ -5,6 +5,7 @@
 #include <stack>
 
 using namespace std;
+using namespace std::chrono;
 
 int partition(int array[], int start, int end){
     int pivot = array[end];
@@ -49,9 +50,10 @@ int main(){
     for (int a=0; a<length; a++){
         arr[a] = rand()%100;
     }
+    auto start = high_resolution_clock::now();
     quickSort(arr,0,length-1);
-    for (int b = 0; b < length; b++){
-        cout << arr[b] << " ";
-    }
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << duration.count() << endl;
     return 0;
 }
